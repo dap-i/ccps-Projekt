@@ -5,8 +5,6 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import requests
 import seaborn as sns
-import boto3
-from botocore.exceptions import NoCredentialsError
 # AWSzugang
 #AWS_ACCESS_KEY_ID = 'YOUR_ACCESS_KEY_ID'
 #AWS_SECRET_ACCESS_KEY = 'YOUR_SECRET_ACCESS_KEY'
