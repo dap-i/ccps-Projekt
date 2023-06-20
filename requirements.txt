@@ -13,6 +13,7 @@ decorator==5.1.1
 entrypoints==0.4
 fonttools==4.39.4
 gitdb==4.0.10
+git+https://github.com/streamlit/files-connection
 GitPython==3.1.31
 idna==3.4
 importlib-metadata==6.6.0
@@ -40,6 +41,7 @@ pytz==2023.3
 pytz-deprecation-shim==0.1.0.post0
 requests==2.30.0
 rich==13.3.5
+s3fs
 s3transfer==0.6.1
 seaborn==0.12.2
 six==1.16.0
