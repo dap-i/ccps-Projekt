@@ -7,6 +7,9 @@ import requests
 import boto3
 import seaborn as sns
 # AWS S3 配置
+
+# csv_url = 'https://raw.githubusercontent.com/dap-i/ccps-Projekt/5bcf6a37fbea16d4e1f3ccf1604000defde71e97/ProbeWurf.CSV'
+# df = pd.read_csv(csv_url)
 S3_BUCKET = 'basketball-vorhersagen'
 S3_KEY = 'ProbeWurf.CSV'
 AWS_REGION = 'eu-central-1'
@@ -18,40 +21,44 @@ s3_client = boto3.client('s3',
                          region_name=AWS_REGION,
                          aws_access_key_id=AWS_ACCESS_KEY,
                          aws_secret_access_key=AWS_SECRET_KEY)
+if "df" not in st.session_state:
+    st.session_state.df = None
 
-# 使用流式传输方式读取 S3 上的 CSV 文件
-obj = s3_client.get_object(Bucket=S3_BUCKET, Key=S3_KEY)
-df = pd.read_csv(obj['Body'])
+# 回调函数，按钮按下后执行的逻辑
+def on_button_click():
+    # 使用流式传输方式读取 S3 上的 CSV 文件
+    obj = s3_client.get_object(Bucket=S3_BUCKET, Key=S3_KEY)
+    df = pd.read_csv(obj['Body'])
+
+    # 在 Session State 中更新 "df" 的值
+    st.session_state.df = df
+
+# 创建一个按钮
+if st.button('Laden die Wurfedaten aus AWS S3 Cloud'):
+    on_button_click()
 
 
+# 检查 Session State 中的 "df" 值是否被更新
+if st.session_state.df is not None:
+ num_rows = st.session_state.df.shape[0]
+ st.title("Wurfvorhersage des Basketball")
 
-#csv_url = 'https://raw.githubusercontent.com/dap-i/ccps-Projekt/5bcf6a37fbea16d4e1f3ccf1604000defde71e97/ProbeWurf.CSV'
-#df = pd.read_csv(csv_url)
+ url = 'https://img95.699pic.com/xsj/19/zz/1o.jpg!/fw/700/watermark/url/L3hzai93YXRlcl9kZXRhaWwyLnBuZw/align/southeast'
+ response = requests.get(url, stream=True)
 
+ app_mode = st.sidebar.selectbox('Wählen Sie die anzuzeigenden Daten aus', ['Einzelwurf','alle Wurfe'])
 
-
-
-
-num_rows = df.shape[0]
-
-st.title("Wurfvorhersage des Basketball")
-
-url = 'https://img95.699pic.com/xsj/19/zz/1o.jpg!/fw/700/watermark/url/L3hzai93YXRlcl9kZXRhaWwyLnBuZw/align/southeast'
-response = requests.get(url, stream=True)
-
-app_mode = st.sidebar.selectbox('Wählen Sie die anzuzeigenden Daten aus', ['Einzelwurf','alle Wurfe'])
-
-if app_mode == 'Einzelwurf':
+ if app_mode == 'Einzelwurf':
     st.write("Basketball-Aufprallpunkt vorhersagen")
     # data-pd.read_csv
     selected_row = st.selectbox("Wähl welche Wurf anzuzeigen", range(1, num_rows+1))
     selected_row -= 1
     # 显示选择的行数据
-    Wurfzahl = df.iloc[selected_row, 0]
-    X_p = df.iloc[selected_row, 1]
-    Y_p = df.iloc[selected_row, 2]
-    Getroffen_wahrscheinlichkeit = df.iloc[selected_row, 4]
-    KI_vorschlag = df.iloc[selected_row, 5]
+    Wurfzahl = st.session_state.df.iloc[selected_row, 0]
+    X_p = st.session_state.df.iloc[selected_row, 1]
+    Y_p = st.session_state.df.iloc[selected_row, 2]
+    Getroffen_wahrscheinlichkeit = st.session_state.df.iloc[selected_row, 4]
+    KI_vorschlag = st.session_state.df.iloc[selected_row, 5]
     if Getroffen_wahrscheinlichkeit <= 70:
         Ball = 2
     else:
@@ -133,18 +140,18 @@ if app_mode == 'Einzelwurf':
     elif Ball == 2:
         st.info("schade!")
 
-elif app_mode == 'alle Wurfe':
+ elif app_mode == 'alle Wurfe':
     st.write("Daten von alle Wurfe")
     column_names = ['Wurfzahl', 'X-Position', 'Y-Position', '/', 'Getroffen', 'Vorschlag']  # 根据实际情况自定义列名
 
     # 设置DataFrame的列名
-    df.columns = column_names
+    st.session_state.df.columns = column_names
 
     # 显示DataFrame
-    st.write(df)
+    st.write(st.session_state.df)
 
-    x_coords = df.iloc[:, 1]
-    y_coords = df.iloc[:, 2]
+    x_coords = st.session_state.df.iloc[:, 1]
+    y_coords = st.session_state.df.iloc[:, 2]
     heatmap_data = pd.crosstab(x_coords, y_coords)
     response = requests.get(url, stream=True)
     background_image = Image.open(response.raw)
