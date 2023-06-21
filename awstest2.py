@@ -12,7 +12,7 @@ import seaborn as sns
 # csv_url = 'https://raw.githubusercontent.com/dap-i/ccps-Projekt/5bcf6a37fbea16d4e1f3ccf1604000defde71e97/ProbeWurf.CSV'
 # df = pd.read_csv(csv_url)
 S3_BUCKET = 'basketball-vorhersagen'
-S3_FOLDER = "testwurf1-5"
+S3_FOLDER = "Wurfdaten"
 AWS_REGION = 'eu-central-1'
 AWS_ACCESS_KEY = 'AKIAXE4YQWX4TRCRAGF3'
 AWS_SECRET_KEY = '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'
