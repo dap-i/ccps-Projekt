@@ -93,7 +93,7 @@ if app_mode == 'Einzelwurf':
         print("r",row,"c",col)
     st.pyplot(fig)
     #getroffenwahrscheinlichkeit
-    st.write('Getroffenwahrscheinlichkeit ist :', Getroffen_wahrscheinlichkeit, '%')
+    st.write('Wahrscheinlichkeit des Treffers :', Getroffen_wahrscheinlichkeit, '%')
 
 
     fig, ax = plt.subplots()
@@ -134,7 +134,7 @@ if app_mode == 'Einzelwurf':
     #                print("counter=", count)
 
     if Troffe == 1:
-        st.success("Bingo!ein Tor schießen")
+        st.success("Super, getroffen")
     elif Troffe == 0:
         st.info("schade!")
   ###########################################################
