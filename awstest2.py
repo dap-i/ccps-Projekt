@@ -156,7 +156,11 @@ elif app_mode == 'alle Wurfe':
         # 检查文件内容是否为空字符串
         if file_content.strip():
             df = pd.read_csv(StringIO(file_content), header=None)
-            
+            df.columns = header
+            df['X-Position']=0
+            df['Y-Position']=0
+            df['Getroffen_wahrscheinlichkeit']=0
+            df['KI-Vorschlag']=0
             dfs.append(df)
             st.dataframe(df)
         else:
@@ -174,11 +178,9 @@ elif app_mode == 'alle Wurfe':
         if columns_to_add > 0:
            additional_columns = pd.DataFrame(0, columns=[f"Column{i + 1}" for i in range(columns_to_add)],
                                                   index=combined_df.index)         
-           combined_df.columns = header
+          
            combined_df = pd.concat([combined_df, additional_columns], axis=1)
            combined_df.columns = [f"Column{i + 1}" for i in range(num_columns)]
-           combined_df.fillna(0,inplace=True)
-           print(combined_df)
           
            st.write(combined_df)
     else:
