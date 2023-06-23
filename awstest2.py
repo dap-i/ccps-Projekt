@@ -212,10 +212,10 @@ elif app_mode == 'alle Wurfe':
     x = np.random.randint(0, 5, size=50)
     y = np.random.randint(0,4, size=50)
 
-    fig, ax = plt.subplots(figsize=(6,4))
+    fig, ax = plt.subplots(figsize=(7,4))
     plt.hist2d(x,y, bins=[np.arange(0,6,1),np.arange(0,5,1)], alpha=0.4)
     plt.colorbar()
-    ax.imshow(background_array, extent=[0, 6, 0, 4], aspect='auto')
+    ax.imshow(background_array, extent=[0, 7, 0, 4], aspect='auto')
     plt.show()
     # heatmap_data = pd.crosstab(x_coords, y_coords)
     # response = requests.get(imageurl, stream=True)
