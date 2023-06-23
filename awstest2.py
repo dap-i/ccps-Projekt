@@ -141,6 +141,7 @@ elif app_mode == 'alle Wurfe':
 
     dfs = []  # 用于存储每个文件的 DataFrame
     file_paths = file_list[1:]
+    header = ['Getroffen/nicht', 'X-Position', 'Y-Position', 'Getroffen_wahrscheinlichkeit', 'KI-Vorschlag']
     st.write([file_paths])
     for file_path in file_paths:
         # 构建完整的文件路径
@@ -151,11 +152,11 @@ elif app_mode == 'alle Wurfe':
         # 读取文件并将其转换为 DataFrame
         response = s3_client.get_object(Bucket=S3_BUCKET, Key=file_path)
         file_content = response["Body"].read().decode()
-
+        
         # 检查文件内容是否为空字符串
         if file_content.strip():
             df = pd.read_csv(StringIO(file_content), header=None)
-            df = df.reindex([[0, i] for i in range(5)], fill_value=0)
+            
             dfs.append(df)
             st.dataframe(df)
         else:
@@ -165,17 +166,19 @@ elif app_mode == 'alle Wurfe':
 
         #
     if dfs:
+        
         combined_df = pd.concat(dfs, ignore_index=True)
         num_columns = 5  # 设置表格的列数
         num_rows = len(combined_df)
         columns_to_add = num_columns - combined_df.shape[1]
         if columns_to_add > 0:
            additional_columns = pd.DataFrame(0, columns=[f"Column{i + 1}" for i in range(columns_to_add)],
-                                                  index=combined_df.index)
+                                                  index=combined_df.index)         
+           combined_df.columns = header
            combined_df = pd.concat([combined_df, additional_columns], axis=1)
            combined_df.columns = [f"Column{i + 1}" for i in range(num_columns)]
-           header = ['Getroffen/nicht', 'X-Position', 'Y-Position', 'Getroffen_wahrscheinlichkeit', 'KI-Vorschlag']
-           combined_df.columns = header
+           combined_df.fillna(0,inplace=True)
+           
           
            st.write(combined_df)
     else:
