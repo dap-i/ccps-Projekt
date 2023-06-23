@@ -118,11 +118,11 @@ if app_mode == 'Einzelwurf':
     st.write("Probe KI-Normalverteilung für Aufprallposition")
     #x_coords = combined_df.iloc[:, 1]
     #y_coords = combined_df.iloc[:, 2]
-    x-n = np.random.normal(loc=4, scale=1.0, size=5000)
-    y-n = np.random.normal(loc=3, scale=1.0, size=5000)
+    x_n = np.random.normal(loc=4, scale=1.0, size=5000)
+    y_n = np.random.normal(loc=3, scale=1.0, size=5000)
 
     fig, ax = plt.subplots(figsize=(8,4))
-    plt.hist2d(x-n,y-n, bins=[np.arange(0,6,1),np.arange(0,5,1)], alpha=0.4)
+    plt.hist2d(x_n,y_n, bins=[np.arange(0,6,1),np.arange(0,5,1)], alpha=0.4)
     plt.colorbar()
     ax.imshow(background_array, extent=[0, 5, 0, 4], aspect='auto')
     plt.show()
