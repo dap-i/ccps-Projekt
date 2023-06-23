@@ -155,7 +155,7 @@ elif app_mode == 'alle Wurfe':
         # 检查文件内容是否为空字符串
         if file_content.strip():
             df = pd.read_csv(StringIO(file_content), header=None)
-            df = df.reindex(range(5), fill_value=0)
+            df = df.reindex([[0, i] for i in range(5)], fill_value=0)
             dfs.append(df)
             st.dataframe(df)
         else:
