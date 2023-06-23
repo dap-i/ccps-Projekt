@@ -42,7 +42,7 @@ if app_mode == 'Einzelwurf':
     df = pd.read_csv(StringIO(file_content), header=None)
     st.session_state.df = df
 
-    st.write("Basketball-Aufprallpunkt vorhersagen")
+    st.write("Basketball-Aufprallposition vorhersagen")
     # data-pd.read_csv
 
     Troffe = st.session_state.df.iloc[0, 0]
@@ -67,30 +67,7 @@ if app_mode == 'Einzelwurf':
         'Y-Position': [Y_p],
         'Getroffen_wahrscheinlichkeit:': [Getroffen_wahrscheinlichkeit]
     }))
-    # 下载图片
-    response = requests.get(imageurl, stream=True)
-    background_image = Image.open(response.raw)
-    # 转换成 NumPy 数组
-    background_array = np.array(background_image)
-    # 绘制网格
-    fig, ax = plt.subplots(4, 5, figsize=(3,2))
-    # 将图像切割成 4x5 网格中的块，并将每个块分配给对应的 Axes 对象
-    x_blocks = np.array_split(background_array, 5, axis=1)
-    blocks = [np.array_split(block, 4, axis=0) for block in x_blocks]
-
-    for i in range(4):
-        for j in range(5):
-            ax[i][j].imshow(blocks[j][i])
-            ax[i][j].axis('off')
-    # 数据坐标
-    data_coords = [(X_p-1, Y_p-1)]
-    # 更改对应坐标的网格颜色
-    for coord in data_coords:
-        row, col = coord
-    if (row, col) == data_coords[0]:
-        ax[row][col].text(0.5, 0.5, 'hit!', fontsize=20, ha='center', va='center',transform=ax[row][col].transAxes, color='red')
-        print("r",row,"c",col)
-    st.pyplot(fig)
+   
     #getroffenwahrscheinlichkeit
     st.write('Wahrscheinlichkeit des Treffers :', Getroffen_wahrscheinlichkeit, '%')
 
@@ -115,23 +92,40 @@ if app_mode == 'Einzelwurf':
     if KI_vorschlag in vorschlag_mapping:
         vorschlag_text = f'Vorschlag für Wurfverbesserung: {vorschlag_mapping[KI_vorschlag]}'
         st.write(vorschlag_text)
-    #with st.container():
-    #    background_Image=Image.open(response.raw)
-    #    st.markdown(f'<style>div.stContainer {{background-image: url("{background_Image}");}}</style>',unsafe_allow_html=True)
-    #    cols = st.columns(4)
-    #   count = 0
-    #    for col in cols:
-    #        for row in range(5):
-                # 创建一个空白按钮作为网格单元格
-    #            cell_key = f"{row}-{col.index}-{count}"
-    #            count += 1
-    #            cell = col.button("", key=cell_key)
-    #            # 检查数据坐标是否在该单元格内，并在该单元格内高亮
-    #            print("r",row,"c",col._positional_key,"key",cell_key)
-    #            if row == data_y and col._positional_key == data_x:
-    #                cell = col.button("", key=cell_key, help="highlighted", style={"background-color": "yellow"})
-    #                print("counter=", count)
+    st.write("Probe-Aufprallposition")
+    response = requests.get(imageurl, stream=True)
+    background_image = Image.open(response.raw)
+    # 转换成 NumPy 数组
+    background_array = np.array(background_image)
+    # 绘制网格
+    fig, ax = plt.subplots(4, 5, figsize=(3,2))
+    # 将图像切割成 4x5 网格中的块，并将每个块分配给对应的 Axes 对象
+    x_blocks = np.array_split(background_array, 5, axis=1)
+    blocks = [np.array_split(block, 4, axis=0) for block in x_blocks]
+    for i in range(4):
+        for j in range(5):
+            ax[i][j].imshow(blocks[j][i])
+            ax[i][j].axis('off')
+    # 数据坐标
+    data_coords = [(4, 3)]
+    # 更改对应坐标的网格颜色
+    for coord in data_coords:
+        row, col = coord
+    if (row, col) == data_coords[0]:
+        ax[row][col].text(0.5, 0.5, 'hit!', fontsize=20, ha='center', va='center',transform=ax[row][col].transAxes, color='red')
+        print("r",row,"c",col)
+    st.pyplot(fig)
+    st.write("KI-Normalverteilung für Aufprallposition")
+    #x_coords = combined_df.iloc[:, 1]
+    #y_coords = combined_df.iloc[:, 2]
+    x-n = numpy.random.normal(loc=4, scale=1.0, size=5000)
+    y-n = numpy.random.normal(loc=3, scale=1.0, size=5000)
 
+    fig, ax = plt.subplots(figsize=(8,4))
+    plt.hist2d(x-n,y-n, bins=[np.arange(0,6,1),np.arange(0,5,1)], alpha=0.4)
+    plt.colorbar()
+    ax.imshow(background_array, extent=[0, 5, 0, 4], aspect='auto')
+    plt.show()
     if Troffe == 1:
         st.success("Super, getroffen")
     elif Troffe == 0:
@@ -141,7 +135,6 @@ elif app_mode == 'alle Wurfe':
 
     dfs = []  # 用于存储每个文件的 DataFrame
     file_paths = file_list[1:]
-    header = ['Getroffen/nicht', 'X-Position', 'Y-Position', 'Getroffen_wahrscheinlichkeit', 'KI-Vorschlag']
     st.write([file_paths])
     for file_path in file_paths:
         # 构建完整的文件路径
@@ -203,7 +196,7 @@ elif app_mode == 'alle Wurfe':
     response = requests.get(imageurl, stream=True)
     background_image = Image.open(response.raw)
     background_array = np.array(background_image)
-  
+    st.write("Probe-Heatmap für Aufprallposition")
     #x_coords = combined_df.iloc[:, 1]
     #y_coords = combined_df.iloc[:, 2]
     x = np.random.randint(0, 5, size=50)
