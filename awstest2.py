@@ -155,6 +155,7 @@ elif app_mode == 'alle Wurfe':
         # 检查文件内容是否为空字符串
         if file_content.strip():
             df = pd.read_csv(StringIO(file_content), header=None)
+            df = df.reindex(range(5), fill_value=0)
             dfs.append(df)
             st.dataframe(df)
         else:
@@ -175,8 +176,8 @@ elif app_mode == 'alle Wurfe':
            combined_df.columns = [f"Column{i + 1}" for i in range(num_columns)]
            header = ['Getroffen/nicht', 'X-Position', 'Y-Position', 'Getroffen_wahrscheinlichkeit', 'KI-Vorschlag']
            combined_df.columns = header
-           combined_df = combined_df.reindex(range(num_rows), fill_value=0)
-           st.dataframe(combined_df)
+          
+           st.write(combined_df)
     else:
             st.write("No valid data found in the selected files.")
 
