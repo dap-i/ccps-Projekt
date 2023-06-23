@@ -6,7 +6,6 @@ from PIL import Image
 import requests
 import boto3
 from io import StringIO
-import seaborn as sns
 # AWS S3 配置
 
 # csv_url = 'https://raw.githubusercontent.com/dap-i/ccps-Projekt/5bcf6a37fbea16d4e1f3ccf1604000defde71e97/ProbeWurf.CSV'
@@ -199,31 +198,38 @@ elif app_mode == 'alle Wurfe':
     #KI vorschlag
 
 
-    x_coords = combined_df.iloc[:, 1]
-    y_coords = combined_df.iloc[:, 2]
-    heatmap_data = pd.crosstab(x_coords, y_coords)
-    response = requests.get(imageurl, stream=True)
-    background_image = Image.open(response.raw)
+    #x_coords = combined_df.iloc[:, 1]
+    #y_coords = combined_df.iloc[:, 2]
+    x = np.random.rayleigh(50, size=5000)
+    y = np.random.rayleigh(50, size=5000)
 
-    background_array = np.array(background_image)
 
-    # 调整热图的大小以适应背景图片
-    fig, ax = plt.subplots(figsize=(heatmap_data.shape[1], heatmap_data.shape[0]))
+    plt.hist2d(x,y, bins=[np.arange(0,400,5),np.arange(0,300,5)])
 
-    # 绘制热图并将背景图片叠加在上面
-    sns.heatmap(heatmap_data, cmap='hot', cbar=True, square=True, annot=True, ax=ax)
-    heatmap = ax.collections[0]
-    heatmap.set_alpha(0.4)
+    plt.show()
+    # heatmap_data = pd.crosstab(x_coords, y_coords)
+    # response = requests.get(imageurl, stream=True)
+    # background_image = Image.open(response.raw)
 
-    ax.invert_yaxis()
-    plt.gca().set_aspect('equal', adjustable='box')
-    extent = [0, background_array.shape[0], 0, background_array.shape[1]]
-    ax.imshow(background_array, extent=[1, 5, 1, 4], aspect='auto', alpha=0.4)
-    # 设置轴标签和标题
-    plt.xlabel('Y Coordinate')
-    plt.ylabel('X Coordinate')
-    plt.title('Basketball Hit Frequency')
+    # background_array = np.array(background_image)
 
-    # 显示热图
+    # # 调整热图的大小以适应背景图片
+    # fig, ax = plt.subplots(figsize=(heatmap_data.shape[1], heatmap_data.shape[0]))
+
+    # # 绘制热图并将背景图片叠加在上面
+    # sns.heatmap(heatmap_data, cmap='hot', cbar=True, square=True, annot=True, ax=ax)
+    # heatmap = ax.collections[0]
+    # heatmap.set_alpha(0.4)
+
+    # ax.invert_yaxis()
+    # plt.gca().set_aspect('equal', adjustable='box')
+    # extent = [0, background_array.shape[0], 0, background_array.shape[1]]
+    # ax.imshow(background_array, extent=[1, 5, 1, 4], aspect='auto', alpha=0.4)
+    # # 设置轴标签和标题
+    # plt.xlabel('Y Coordinate')
+    # plt.ylabel('X Coordinate')
+    # plt.title('Basketball Hit Frequency')
+
+    # # 显示热图
     st.pyplot(fig)
 
