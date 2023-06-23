@@ -114,8 +114,7 @@ if app_mode == 'Einzelwurf':
         ax[row][col].text(0.5, 0.5, 'hit!', fontsize=20, ha='center', va='center',transform=ax[row][col].transAxes, color='red')
         print("r",row,"c",col)
     st.pyplot(fig)
-    st.pyplot(fig)
-   
+
     st.write("Probe KI-Normalverteilung für Aufprallposition")
     #x_coords = combined_df.iloc[:, 1]
     #y_coords = combined_df.iloc[:, 2]
@@ -127,6 +126,7 @@ if app_mode == 'Einzelwurf':
     plt.colorbar()
     ax.imshow(background_array, extent=[0, 5, 0, 4], aspect='auto')
     plt.show()
+    st.pyplot(fig)
    
     if Troffe == 1:
         st.success("Super, getroffen")
