@@ -161,7 +161,7 @@ elif app_mode == 'alle Wurfe':
             df['Getroffen_wahrscheinlichkeit'] = [0]
             df['KI-Vorschlag'] = [0]
             dfs.append(df)
-            st.dataframe(df)
+            
         else:
             print(f"Skipped empty file: {s3_file_path}")
 
@@ -181,7 +181,7 @@ elif app_mode == 'alle Wurfe':
            combined_df = pd.concat([combined_df, additional_columns], axis=1)
            combined_df.columns = [f"Column{i + 1}" for i in range(num_columns)]
           
-           st.write(combined_df)
+           st.dataframe(combined_df)
     else:
             st.write("No valid data found in the selected files.")
 
