@@ -204,7 +204,7 @@ elif app_mode == 'alle Wurfe':
     y = np.random.rayleigh(4, size=5000)
 
 
-    plt.hist2d(x,y, bins=[np.arange(0,5,1),np.arange(0,4,1)])
+    plt.hist2d(x,y, bins=[np.arange(0,6,1),np.arange(0,5,1)])
 
     plt.show()
     # heatmap_data = pd.crosstab(x_coords, y_coords)
