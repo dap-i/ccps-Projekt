@@ -178,7 +178,7 @@ elif app_mode == 'alle Wurfe':
            combined_df = pd.concat([combined_df, additional_columns], axis=1)
            combined_df.columns = [f"Column{i + 1}" for i in range(num_columns)]
            combined_df.fillna(0,inplace=True)
-           
+           print(combined_df)
           
            st.write(combined_df)
     else:
