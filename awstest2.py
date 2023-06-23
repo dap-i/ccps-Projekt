@@ -171,7 +171,7 @@ elif app_mode == 'alle Wurfe':
         num_rows = len(combined_df)
         columns_to_add = num_columns - combined_df.shape[1]
         if columns_to_add > 0:
-          additional_columns = pd.DataFrame(0, columns=[f"Column{i + 1}" for i in range(columns_to_add)],
+           additional_columns = pd.DataFrame(0, columns=[f"Column{i + 1}" for i in range(columns_to_add)],
                                                   index=combined_df.index)
            combined_df = pd.concat([combined_df, additional_columns], axis=1)
            combined_df.columns = [f"Column{i + 1}" for i in range(num_columns)]
@@ -180,7 +180,7 @@ elif app_mode == 'alle Wurfe':
            combined_df = combined_df.reindex(range(num_rows), fill_value=0)
            st.dataframe(combined_df)
     else:
-            st.write("No valid data found in the selected files.")
+           st.write("No valid data found in the selected files.")
 
     getroffen_count = len(combined_df[combined_df.iloc[:, 0] != 0])
 
