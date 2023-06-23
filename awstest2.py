@@ -200,11 +200,11 @@ elif app_mode == 'alle Wurfe':
 
     #x_coords = combined_df.iloc[:, 1]
     #y_coords = combined_df.iloc[:, 2]
-    x = np.random.rayleigh(50, size=5000)
-    y = np.random.rayleigh(50, size=5000)
+    x = np.random.rayleigh(5, size=5000)
+    y = np.random.rayleigh(4, size=5000)
 
 
-    plt.hist2d(x,y, bins=[np.arange(0,400,5),np.arange(0,300,5)])
+    plt.hist2d(x,y, bins=[np.arange(0,5,1),np.arange(0,4,1)])
 
     plt.show()
     # heatmap_data = pd.crosstab(x_coords, y_coords)
