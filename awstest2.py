@@ -56,7 +56,7 @@ if app_mode == 'Einzelwurf':
             X_p = st.session_state.df.iloc[0, 1]
             Y_p = st.session_state.df.iloc[0, 2]
             Getroffen_wahrscheinlichkeit = st.session_state.df.iloc[0, 0]
-            KI_vorschlag = st.session_state.df.iloc[0, 5]
+            KI_vorschlag = st.session_state.df.iloc[0, 4]
 
     getroffe_text = 'nein'
     if Troffe == 1:
