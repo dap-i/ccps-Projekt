@@ -208,6 +208,7 @@ elif app_mode == 'alle Wurfe':
 
     fig, ax = plt.subplots(figsize=(6,5))
     plt.hist2d(x,y, bins=[np.arange(0,6,1),np.arange(0,5,1)], alpha=0.4)
+    plt.colorbar()
     ax.imshow(background_array, extent=[0, 5, 0, 4], aspect='auto')
     plt.show()
     # heatmap_data = pd.crosstab(x_coords, y_coords)
