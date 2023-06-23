@@ -156,10 +156,6 @@ elif app_mode == 'alle Wurfe':
         # 检查文件内容是否为空字符串
         if file_content.strip():
             df = pd.read_csv(StringIO(file_content), header=None)            
-            df['X-Position'] = [0]
-            df['Y-Position'] = [0]
-            df['Getroffen_wahrscheinlichkeit'] = [0]
-            df['KI-Vorschlag'] = [0]
             dfs.append(df)
             
         else:
@@ -175,11 +171,12 @@ elif app_mode == 'alle Wurfe':
         num_rows = len(combined_df)
         columns_to_add = num_columns - combined_df.shape[1]
         if columns_to_add > 0:
-           additional_columns = pd.DataFrame(0, columns=[f"Column{i + 1}" for i in range(columns_to_add)],
-                                                  index=combined_df.index)         
-           combined_df.columns = header
+          additional_columns = pd.DataFrame(0, columns=[f"Column{i + 1}" for i in range(columns_to_add)],
+                                                  index=combined_df.index)
            combined_df = pd.concat([combined_df, additional_columns], axis=1)
-           combined_df.columns = [f"Column{i + 1}" for i in range(num_columns)
+           combined_df.columns = [f"Column{i + 1}" for i in range(num_columns)]
+           header = ['Getroffen/nicht', 'X-Position', 'Y-Position', 'Getroffen_wahrscheinlichkeit', 'KI-Vorschlag']
+           combined_df.columns = header
            combined_df = combined_df.reindex(range(num_rows), fill_value=0)
            st.dataframe(combined_df)
     else:
