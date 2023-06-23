@@ -93,6 +93,7 @@ if app_mode == 'Einzelwurf':
         vorschlag_text = f'Vorschlag für Wurfverbesserung: {vorschlag_mapping[KI_vorschlag]}'
         st.write(vorschlag_text)
     st.write("Probe-Aufprallposition")
+   
     response = requests.get(imageurl, stream=True)
     background_image = Image.open(response.raw)
     # 转换成 NumPy 数组
@@ -106,26 +107,26 @@ if app_mode == 'Einzelwurf':
         for j in range(5):
             ax[i][j].imshow(blocks[j][i])
             ax[i][j].axis('off')
-    # 数据坐标
     data_coords = [(4, 3)]
-    # 更改对应坐标的网格颜色
     for coord in data_coords:
         row, col = coord
     if (row, col) == data_coords[0]:
         ax[row][col].text(0.5, 0.5, 'hit!', fontsize=20, ha='center', va='center',transform=ax[row][col].transAxes, color='red')
         print("r",row,"c",col)
     st.pyplot(fig)
-    st.write("KI-Normalverteilung für Aufprallposition")
+   
+    st.write("Probe KI-Normalverteilung für Aufprallposition")
     #x_coords = combined_df.iloc[:, 1]
     #y_coords = combined_df.iloc[:, 2]
-    x-n = numpy.random.normal(loc=4, scale=1.0, size=5000)
-    y-n = numpy.random.normal(loc=3, scale=1.0, size=5000)
+    x-n = np.random.normal(loc=4, scale=1.0, size=5000)
+    y-n = np.random.normal(loc=3, scale=1.0, size=5000)
 
     fig, ax = plt.subplots(figsize=(8,4))
     plt.hist2d(x-n,y-n, bins=[np.arange(0,6,1),np.arange(0,5,1)], alpha=0.4)
     plt.colorbar()
     ax.imshow(background_array, extent=[0, 5, 0, 4], aspect='auto')
     plt.show()
+   
     if Troffe == 1:
         st.success("Super, getroffen")
     elif Troffe == 0:
