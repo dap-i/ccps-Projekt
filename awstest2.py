@@ -107,7 +107,7 @@ if app_mode == 'Einzelwurf':
         for j in range(5):
             ax[i][j].imshow(blocks[j][i])
             ax[i][j].axis('off')
-    data_coords = [(X_p, Y_p)]
+    data_coords = [(2, 2)]
     for coord in data_coords:
         row, col = coord
     if (row, col) == data_coords[0]:
@@ -118,8 +118,8 @@ if app_mode == 'Einzelwurf':
     st.write("Probe KI-Normalverteilung für Aufprallposition")
     #x_coords = combined_df.iloc[:, 1]
     #y_coords = combined_df.iloc[:, 2]
-    x_n = np.random.normal(loc=4, scale=1.0, size=5000)
-    y_n = np.random.normal(loc=3, scale=1.0, size=5000)
+    x_n = np.random.normal(loc=2, scale=1.0, size=5000)
+    y_n = np.random.normal(loc=2, scale=1.0, size=5000)
 
     fig, ax = plt.subplots(figsize=(8,4))
     plt.hist2d(x_n,y_n, bins=[np.arange(0,6,1),np.arange(0,5,1)], alpha=0.4)
@@ -208,29 +208,6 @@ elif app_mode == 'alle Wurfe':
     plt.colorbar()
     ax.imshow(background_array, extent=[0, 5, 0, 4], aspect='auto')
     plt.show()
-    # heatmap_data = pd.crosstab(x_coords, y_coords)
-    # response = requests.get(imageurl, stream=True)
-    # background_image = Image.open(response.raw)
-
-    # background_array = np.array(background_image)
-
-    # # 调整热图的大小以适应背景图片
-    
-
-    # # 绘制热图并将背景图片叠加在上面
-    # sns.heatmap(heatmap_data, cmap='hot', cbar=True, square=True, annot=True, ax=ax)
-    # heatmap = ax.collections[0]
-    # heatmap.set_alpha(0.4)
-
-    # ax.invert_yaxis()
-    # plt.gca().set_aspect('equal', adjustable='box')
-    # extent = [0, background_array.shape[0], 0, background_array.shape[1]]
-    # ax.imshow(background_array, extent=[1, 5, 1, 4], aspect='auto', alpha=0.4)
-    # # 设置轴标签和标题
-    # plt.xlabel('Y Coordinate')
-    # plt.ylabel('X Coordinate')
-    # plt.title('Basketball Hit Frequency')
-
-    # # 显示热图
+  
     st.pyplot(fig)
 
