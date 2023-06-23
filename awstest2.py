@@ -107,7 +107,7 @@ if app_mode == 'Einzelwurf':
         for j in range(5):
             ax[i][j].imshow(blocks[j][i])
             ax[i][j].axis('off')
-    data_coords = [(4, 3)]
+    data_coords = [(X_p, Y_p)]
     for coord in data_coords:
         row, col = coord
     if (row, col) == data_coords[0]:
