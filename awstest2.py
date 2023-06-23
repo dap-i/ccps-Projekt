@@ -189,11 +189,11 @@ elif app_mode == 'alle Wurfe':
     ratio = getroffen_count / total_rows
 
     st.write('Gesamtzahl der Korbtreffer ist', getroffen_count)
-    st.write('Treffergenauigkeit ist', ratio, '%')
+    st.write('Treffergenauigkeit ist', ratio*100, '%')
 
 
     fig, ax = plt.subplots()
-    ax.pie([ratio, 100 - ratio], labels=['Getroffen', 'verfehlt'], autopct='%1.1f%%', startangle=90)
+    ax.pie([ratio*100, 100 - ratio*100], labels=['Getroffen', 'verfehlt'], autopct='%1.1f%%', startangle=90)
     ax.axis('equal')
     st.pyplot(fig)
     #KI vorschlag
@@ -211,7 +211,7 @@ elif app_mode == 'alle Wurfe':
     fig, ax = plt.subplots(figsize=(heatmap_data.shape[1], heatmap_data.shape[0]))
 
     # 绘制热图并将背景图片叠加在上面
-    sns.heatmap(heatmap_data, cmap='hot', cbar=True, square=True, annot=True, ax=ax, vmax=[6,6], vmin=[0,0])
+    sns.heatmap(heatmap_data, cmap='hot', cbar=True, square=True, annot=True, ax=ax)
     heatmap = ax.collections[0]
     heatmap.set_alpha(0.4)
 
