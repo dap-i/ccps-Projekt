@@ -209,8 +209,8 @@ elif app_mode == 'alle Wurfe':
   
     #x_coords = combined_df.iloc[:, 1]
     #y_coords = combined_df.iloc[:, 2]
-    x =np.random.randint(1, 10, size=5)
-    y = np.random.random(2,4, size=5000)
+    x = np.random.randint(0, 5, size=50)
+    y = np.random.randint(0,4, size=50)
 
     fig, ax = plt.subplots(figsize=(6,4))
     plt.hist2d(x,y, bins=[np.arange(0,6,1),np.arange(0,5,1)], alpha=0.4)
