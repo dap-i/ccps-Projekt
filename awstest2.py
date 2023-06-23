@@ -179,8 +179,8 @@ elif app_mode == 'alle Wurfe':
                                                   index=combined_df.index)         
            combined_df.columns = header
            combined_df = pd.concat([combined_df, additional_columns], axis=1)
-           combined_df.columns = [f"Column{i + 1}" for i in range(num_columns)]
-          
+           combined_df.columns = [f"Column{i + 1}" for i in range(num_columns)
+           combined_df = combined_df.reindex(range(num_rows), fill_value=0)
            st.dataframe(combined_df)
     else:
             st.write("No valid data found in the selected files.")
