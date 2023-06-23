@@ -189,7 +189,14 @@ elif app_mode == 'alle Wurfe':
     ratio = getroffen_count / total_rows
 
     st.write('Gesamtzahl der Korbtreffer ist', getroffen_count)
-    st.write('Treffergenauigkeit ist', ratio)
+    st.write('Treffergenauigkeit ist', ratio, '%')
+
+
+    fig, ax = plt.subplots()
+    ax.pie([ratio, 100 - ratio], labels=['Getroffen', 'verfehlt'], autopct='%1.1f%%', startangle=90)
+    ax.axis('equal')
+    st.pyplot(fig)
+    #KI vorschlag
 
 
     x_coords = combined_df.iloc[:, 1]
