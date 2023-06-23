@@ -211,7 +211,7 @@ elif app_mode == 'alle Wurfe':
     fig, ax = plt.subplots(figsize=(heatmap_data.shape[1], heatmap_data.shape[0]))
 
     # 绘制热图并将背景图片叠加在上面
-    sns.heatmap(heatmap_data, cmap='hot', cbar=True, square=True, annot=True, ax=ax)
+    sns.heatmap(heatmap_data, cmap='hot', cbar=True, square=True, annot=True, ax=ax, vmax=[6,6], vmin=[0,0])
     heatmap = ax.collections[0]
     heatmap.set_alpha(0.4)
 
