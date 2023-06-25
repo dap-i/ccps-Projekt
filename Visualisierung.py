@@ -28,18 +28,13 @@ if app_mode == 'Einzelwurf':
  st.title("Wurfvorhersage des Basketball")
  selected_file = st.selectbox("Wahl welche Datei", file_list, index=1)
  if selected_file:
-    # 构建完整的文件路径
-
+    # Datei-Pfad
     file_path = f"s3://{S3_BUCKET}/{selected_file}"
-
     response = s3_client.get_object(Bucket=S3_BUCKET, Key=selected_file)
     file_content = response["Body"].read().decode()
     df = pd.read_csv(StringIO(file_content), header=None)
     st.session_state.df = df
-
-    st.write("Basketball-Aufprallposition vorhersagen")
     # data-pd.read_csv
-
     Troffe = st.session_state.df.iloc[0, 0]
     X_p = 0
     Y_p = 0
@@ -87,8 +82,8 @@ if app_mode == 'Einzelwurf':
     if KI_vorschlag in vorschlag_mapping:
         vorschlag_text = f'Vorschlag für Wurfverbesserung: {vorschlag_mapping[KI_vorschlag]}'
         st.write(vorschlag_text)
+    #Treffenposition
     st.write("Probe-Aufprallposition")
-   
     response = requests.get(imageurl, stream=True)
     background_image = Image.open(response.raw)
     # 转换成 NumPy 数组
