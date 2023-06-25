@@ -6,10 +6,7 @@ from PIL import Image
 import requests
 import boto3
 from io import StringIO
-# AWS S3 配置
-
-# csv_url = 'https://raw.githubusercontent.com/dap-i/ccps-Projekt/5bcf6a37fbea16d4e1f3ccf1604000defde71e97/ProbeWurf.CSV'
-# df = pd.read_csv(csv_url)
+#Zugriffsschlüssel
 S3_BUCKET = 'basketball-vorhersagen'
 S3_FOLDER = "Wurfdaten"
 AWS_REGION = 'eu-central-1'
@@ -17,7 +14,7 @@ AWS_ACCESS_KEY = 'AKIAXE4YQWX4TRCRAGF3'
 AWS_SECRET_KEY = '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'
 imageurl = 'https://github.com/dap-i/ccps-Projekt/blob/main/southeast.jpg?raw=true'
 response = requests.get(imageurl, stream=True)
-# 创建 S3 客户端
+# S3Klient erstellen
 s3_client = boto3.client('s3',
                          region_name=AWS_REGION,
                          aws_access_key_id=AWS_ACCESS_KEY,
