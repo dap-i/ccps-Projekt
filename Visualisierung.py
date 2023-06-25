@@ -78,19 +78,18 @@ if app_mode == 'Einzelwurf':
         'O': 'nach Oben',
         0: 'Kein Vorschlag'
     }
-
     if KI_vorschlag in vorschlag_mapping:
         vorschlag_text = f'Vorschlag für Wurfverbesserung: {vorschlag_mapping[KI_vorschlag]}'
         st.write(vorschlag_text)
+      
     #Treffenposition
     st.write("Probe-Aufprallposition")
     response = requests.get(imageurl, stream=True)
     background_image = Image.open(response.raw)
-    # 转换成 NumPy 数组
+    # in Numpy Konvertieren
     background_array = np.array(background_image)
-    # 绘制网格
     fig, ax = plt.subplots(4, 5, figsize=(3,2))
-    # 将图像切割成 4x5 网格中的块，并将每个块分配给对应的 Axes 对象
+    # Schneiden die Grafik in 4x5 und verteilen
     x_blocks = np.array_split(background_array, 5, axis=1)
     blocks = [np.array_split(block, 4, axis=0) for block in x_blocks]
     for i in range(4):
