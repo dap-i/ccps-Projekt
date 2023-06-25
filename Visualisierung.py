@@ -12,16 +12,13 @@ S3_FOLDER = "Wurfdaten"
 AWS_REGION = 'eu-central-1'
 AWS_ACCESS_KEY = 'AKIAXE4YQWX4TRCRAGF3'
 AWS_SECRET_KEY = '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'
-imageurl = 'https://github.com/dap-i/ccps-Projekt/blob/main/southeast.jpg?raw=true'
-response = requests.get(imageurl, stream=True)
 # S3Klient erstellen
 s3_client = boto3.client('s3',
                          region_name=AWS_REGION,
                          aws_access_key_id=AWS_ACCESS_KEY,
                          aws_secret_access_key=AWS_SECRET_KEY)
-
-response = s3_client.list_objects_v2(Bucket=S3_BUCKET, Prefix=S3_FOLDER)
 file_list = [obj["Key"] for obj in response.get("Contents", [])]
+imageurl = 'https://github.com/dap-i/ccps-Projekt/blob/main/southeast.jpg?raw=true'
 app_mode = st.sidebar.selectbox('Wählen Sie die anzuzeigenden Daten aus', ['Einzelwurf','alle Wurfe'])
 #if "df" not in st.session_state:
     #st.session_state.df = None
