@@ -128,7 +128,7 @@ elif app_mode == 'alle Wurfe':
     # DataFrame für alle Dateien zu speichern
     dfs = []  
     file_paths = file_list[1:]
-    st.write([file_paths])
+    #st.write([file_paths])
     for file_path in file_paths:
         s3_file_path = f"s3://{S3_BUCKET}/{file_path}"
         print("File path:", s3_file_path)
