@@ -36,10 +36,10 @@ if app_mode == 'Einzelwurf':
     st.session_state.df = df
     # data-pd.read_csv
     Troffe = st.session_state.df.iloc[0, 0]
-    X_p = 0
-    Y_p = 0
+    X_p = 0 
+    Y_p = 0 
     Getroffen_wahrscheinlichkeit = st.session_state.df.iloc[0, 0]*100
-    KI_vorschlag = 0
+    KI_vorschlag = 'Kein'
     if len(df) > 0:
         if len(df.columns) > 1:
             X_p = st.session_state.df.iloc[0, 1]
@@ -55,7 +55,8 @@ if app_mode == 'Einzelwurf':
         'getroffen/nicht': [getroffe_text],
         'X-Position': [X_p],
         'Y-Position': [Y_p],
-        'Getroffen_wahrscheinlichkeit:': [Getroffen_wahrscheinlichkeit]
+        'Getroffen_wahrscheinlichkeit:': [Getroffen_wahrscheinlichkeit],
+        'Vorschlag aus KI:': [KI_vorschlag]
     }))
    
     #getroffenwahrscheinlichkeit
@@ -76,7 +77,7 @@ if app_mode == 'Einzelwurf':
         'R': 'nach Rechts',
         'U': 'nach Unter',
         'O': 'nach Oben',
-        0: 'Kein Vorschlag'
+        'Kein': 'Kein Vorschlag'
     }
     if KI_vorschlag in vorschlag_mapping:
         vorschlag_text = f'Vorschlag für Wurfverbesserung: {vorschlag_mapping[KI_vorschlag]}'
@@ -139,6 +140,7 @@ elif app_mode == 'alle Wurfe':
             dfs.append(df)         
         else:
             print(f"Skipped empty file: {s3_file_path}")
+    # fehle Columns Hinzufügen
     if dfs:
         combined_df = pd.concat(dfs, ignore_index=True)
         num_columns = 5  
@@ -157,23 +159,18 @@ elif app_mode == 'alle Wurfe':
            st.write("No valid data found in the selected files.")
 
     getroffen_count = len(combined_df[combined_df.iloc[:, 0] != 0])
-
-    # 计算总行数
+    # Gesamtzahl der Würfe
     total_rows = len(combined_df)
-
-    # 计算比例
+    #Treffergenauigkeit rechnen
     ratio = getroffen_count / total_rows
-
     st.write('Gesamtzahl der Korbtreffer ist', getroffen_count)
     st.write('Treffergenauigkeit ist', ratio*100, '%')
-
-
+    #Kreisdiagramm
     fig, ax = plt.subplots()
     ax.pie([ratio*100, 100 - ratio*100], labels=['Getroffen', 'verfehlt'], autopct='%1.1f%%', startangle=90)
     ax.axis('equal')
     st.pyplot(fig)
-    #KI vorschlag
-
+    #Verteilung von 
     response = requests.get(imageurl, stream=True)
     background_image = Image.open(response.raw)
     background_array = np.array(background_image)
