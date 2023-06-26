@@ -25,7 +25,7 @@ app_mode = st.sidebar.selectbox('Wählen Sie die anzuzeigenden Daten aus', ['Ein
     #st.session_state.df = None
 ##############################################
 if app_mode == 'Einzelwurf':
- st.title("Wurfvorhersage des Basketball")
+ st.title("Datenvisualisierung von Einzelwurf")
  selected_file = st.selectbox("Wahl welche Datei", file_list, index=1)
  if selected_file:
     # Datei-Pfad
@@ -124,6 +124,7 @@ if app_mode == 'Einzelwurf':
         st.info("schade!")
   ###########################################################
 elif app_mode == 'alle Wurfe':
+    st.title("Datenvisualisierung von alle Würfe")
     # DataFrame für alle Dateien zu speichern
     dfs = []  
     file_paths = file_list[1:]
