@@ -123,35 +123,25 @@ if app_mode == 'Einzelwurf':
         st.info("schade!")
   ###########################################################
 elif app_mode == 'alle Wurfe':
-
-    dfs = []  # 用于存储每个文件的 DataFrame
+    # DataFrame für jeder Datei zu speichern
+    dfs = []  
     file_paths = file_list[1:]
     st.write([file_paths])
     for file_path in file_paths:
-        # 构建完整的文件路径
         s3_file_path = f"s3://{S3_BUCKET}/{file_path}"
-
         print("File path:", s3_file_path)
-
-        # 读取文件并将其转换为 DataFrame
+        # Datei lesen und konvertieren zu DataFrame
         response = s3_client.get_object(Bucket=S3_BUCKET, Key=file_path)
-        file_content = response["Body"].read().decode()
-        
-        # 检查文件内容是否为空字符串
+        file_content = response["Body"].read().decode()    
+        # prüfung ob die Datei leer ist
         if file_content.strip():
             df = pd.read_csv(StringIO(file_content), header=None)            
-            dfs.append(df)
-            
+            dfs.append(df)         
         else:
             print(f"Skipped empty file: {s3_file_path}")
-
-    # 设置 DataFrame 的列名
-
-        #
     if dfs:
-        
         combined_df = pd.concat(dfs, ignore_index=True)
-        num_columns = 5  # 设置表格的列数
+        num_columns = 5  
         num_rows = len(combined_df)
         columns_to_add = num_columns - combined_df.shape[1]
         if columns_to_add > 0:
