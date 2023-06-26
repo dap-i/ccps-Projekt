@@ -123,7 +123,7 @@ if app_mode == 'Einzelwurf':
         st.info("schade!")
   ###########################################################
 elif app_mode == 'alle Wurfe':
-    # DataFrame für jeder Datei zu speichern
+    # DataFrame für alle Dateien zu speichern
     dfs = []  
     file_paths = file_list[1:]
     st.write([file_paths])
